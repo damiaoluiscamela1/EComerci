@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Entities
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<string>
     {
         [Column("USR_CPF")]
         [MaxLength(50)]
@@ -65,6 +65,6 @@ namespace Entities.Entities
         [Column("USR_TIPO")]
         [Display(Name = "Tipo")]
 
-        public TipoUsuario Tipo { get; set; }
+        public TipoUsuario? Tipo { get; set; }
     }
 }

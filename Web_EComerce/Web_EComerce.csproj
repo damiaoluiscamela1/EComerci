@@ -14,7 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastruture\Infrastruture.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

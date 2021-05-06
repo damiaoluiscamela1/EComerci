@@ -17,6 +17,7 @@ namespace Infrastruture.Configuration
 
         public DbSet<Produto> Produto { get; set; }
         public DbSet<CompraUsuario> CompraUsuario { get; set; }
+        public DbSet<IdentityUser> IdentityUser { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -26,6 +27,12 @@ namespace Infrastruture.Configuration
                 optionsBuilder.UseSqlServer(GetStringConection());
                 base.OnConfiguring(optionsBuilder);
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<IdentityUser>().ToTable("AspNetUsers").HasKey(t => t.Id);
+            base.OnModelCreating(builder);
         }
 
         private string GetStringConection() 
