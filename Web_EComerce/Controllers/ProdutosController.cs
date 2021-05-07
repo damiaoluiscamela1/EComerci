@@ -17,7 +17,7 @@ namespace Web_EComerce.Controllers
             _InterfaceProductApp = InterfaceProductApp;
         }
 
-        // GET: ProdutosController
+        //// GET: ProdutosController
         public async Task<IActionResult> Index()
         {
             return View(await _InterfaceProductApp.List());
