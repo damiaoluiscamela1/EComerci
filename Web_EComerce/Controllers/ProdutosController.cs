@@ -1,15 +1,18 @@
 ﻿using Application.Interfaces;
 using Entities.Entities;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Web_EComerce.Controllers
 {
+
+    [Authorize]
     public class ProdutosController : Controller
     {
+
+        
         public readonly InterfaceProductApp _InterfaceProductApp;
 
         public ProdutosController(InterfaceProductApp InterfaceProductApp)
@@ -49,13 +52,14 @@ namespace Web_EComerce.Controllers
                     {
                         ModelState.AddModelError(item.NomePropriedade, item.mensagem);
                     }
+                    return View("Edit", produto);
                 }
-                return RedirectToAction(nameof(Index));
+             
             }
             catch
             {
-                return View();
-             }
+                return View("Edit", produto);
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -73,12 +77,22 @@ namespace Web_EComerce.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _InterfaceProductApp.UpdateProduct(produto);
+                if (produto.Notitycoes.Any())
+                {
+                    foreach (var item in produto.Notitycoes)
+                    {
+                        ModelState.AddModelError(item.NomePropriedade, item.mensagem);
+                    }
+
+                    return View("Edit", produto);
+                }
             }
             catch
             {
-                return View();
+                return View("Edit", produto);
             }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ProdutosController/Delete/5
@@ -94,6 +108,9 @@ namespace Web_EComerce.Controllers
         {
             try
             {
+                var produtoDeletar = await _InterfaceProductApp.GetTEntityById(id);
+                await _InterfaceProductApp.Delete(produtoDeletar);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

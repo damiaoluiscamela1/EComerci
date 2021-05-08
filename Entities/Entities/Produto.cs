@@ -33,8 +33,9 @@ namespace Entities.Entities
         public string Observacao { get; set; }
 
         [Column("PRD_VALOR")]
+       
         [Display(Name = "Valor")]
-
+       
         public decimal Valor { get; set; }
 
 
